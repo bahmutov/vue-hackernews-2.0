@@ -1,7 +1,9 @@
 import Item from '../../src/components/Item.vue'
 import { timeAgo, host } from '../../src/util/filters'
+import { createRouter } from '../../src/router'
+import VueRouter from 'vue-router'
+import mountVue from 'cypress-vue-unit-test'
 
-const mountVue = require('cypress-vue-unit-test')
 /* eslint-env mocha */
 /* global cy, Cypress */
 describe('Item', () => {
@@ -20,7 +22,9 @@ describe('Item', () => {
       descendants: 42
     }
   }
+
   const extensions = {
+    plugins: [ VueRouter ],
     filters: { timeAgo, host }
   }
   const html = `
@@ -32,29 +36,24 @@ describe('Item', () => {
     </body>
   </html>
   `
-  // <script src="https://unpkg.com/vue-router@3.0.1"></script>
-  // hmm, when adding the vue router getting an error inside the RouterLink
-  // render function
-  // var router = this.$router;
-  // var current = this.$route;
-  // var ref = router.resolve(this.to, current, this.append);
-  // this.$router is undefined
-  // Seems VueRouter.install(Vue) did not go well
+
   const options = {
     html,
     extensions
   }
 
+  const router = createRouter()
+
   beforeEach(() => {
     cy.viewport(400, 200)
   })
-  beforeEach(mountVue({ template, components, data }, options))
+  beforeEach(mountVue({ template, components, data, router }, options))
 
   it('loads news item', () => {
     cy.contains('.score', 101)
   })
 
   it('has link to comments', () => {
-    cy.contains('router-link', '42 comments')
+    cy.contains('.comments-link > a', '42 comments')
   })
 })
