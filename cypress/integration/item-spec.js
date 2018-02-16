@@ -1,3 +1,5 @@
+import VueRouter from 'vue-router'
+import router from '../../src/router'
 import Item from '../../src/components/Item.vue'
 import { timeAgo, host } from '../../src/util/filters'
 import { createRouter } from '../../src/router'
@@ -24,21 +26,11 @@ describe('Item', () => {
   }
 
   const extensions = {
-    plugins: [ VueRouter ],
+    plugins: [VueRouter],
     filters: { timeAgo, host }
   }
-  const html = `
-    <html>
-    <head></head>
-    <body>
-      <div id="app"></div>
-      <script src="https://unpkg.com/vue@2.5.3"></script>
-    </body>
-  </html>
-  `
 
   const options = {
-    html,
     extensions
   }
 
@@ -47,7 +39,7 @@ describe('Item', () => {
   beforeEach(() => {
     cy.viewport(400, 200)
   })
-  beforeEach(mountVue({ template, components, data, router }, options))
+  beforeEach(mountVue({ template, router, components, data }, options))
 
   it('loads news item', () => {
     cy.contains('.score', 101)
