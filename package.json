@@ -44,7 +44,7 @@
     "babel-preset-env": "^1.6.1",
     "chokidar": "^2.0.2",
     "css-loader": "^0.28.7",
-    "cypress": "^2.0.0",
+    "cypress": "^3.0.0",
     "cypress-vue-unit-test": "^1.10.0",
     "file-loader": "^1.1.5",
     "friendly-errors-webpack-plugin": "^1.6.1",
